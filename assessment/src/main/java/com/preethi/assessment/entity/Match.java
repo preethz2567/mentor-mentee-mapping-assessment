@@ -1,76 +1,56 @@
 package com.preethi.assessment.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
 @Entity
 public class Match {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long match_id;
+    private Long match_id;
 
-    @OneToMany
-    private Mentor mentor_id;
+    @ManyToOne
+    private Mentor mentor;
 
-    @OneToMany
-    private Mentee mentee_id;
+    @ManyToOne
+    private Mentee mentee;
 
     private String status;
 
-    private String created_At;
+    private String created_at;
 
-    public long getMatch_id() {
-        return match_id;
+    public Long getMatch_id() {
+         return match_id; 
+        }
+    public void setMatch_id(Long match_id) { 
+        
+        this.match_id = match_id; 
+    
     }
 
-    public void setMatch_id(long match_id) {
-        this.match_id = match_id;
+    public Mentor getMentor() { 
+        
+        return mentor; 
+    }
+    public void setMentor(Mentor mentor) { 
+        this.mentor = mentor; 
     }
 
-    public Mentor getMentor_id() {
-        return mentor_id;
-    }
+    public Mentee getMentee() {
+         return mentee;
+         }
+    public void setMentee(Mentee mentee) { this.mentee = mentee; }
 
-    public void setMentor_id(Mentor mentor_id) {
-        this.mentor_id = mentor_id;
-    }
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
 
-    public Mentee getMentee_id() {
-        return mentee_id;
-    }
+    public String getCreated_at() { return created_at; }
+    public void setCreated_at(String created_at) { this.created_at = created_at; }
 
-    public void setMentee_id(Mentee mentee_id) {
-        this.mentee_id = mentee_id;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getCreated_At() {
-        return created_At;
-    }
-
-    public void setCreated_At(String created_At) {
-        this.created_At = created_At;
-    }
-
-    public Match() {
-    }
+    public Match() {}
 
     @Override
-    public String toString() {        
-        return "Match [match_id=" + match_id + ", mentor_id=" + mentor_id + ", mentee_id=" + mentee_id + ", status="
-                + status + ", created_At=" + created_At + "]";
+    public String toString() {
+        return "Match [match_id=" + match_id + ", mentor=" + mentor + ", mentee=" + mentee + ", status=" + status + ", created_at=" + created_at + "]";
     }
-    
-    
 }

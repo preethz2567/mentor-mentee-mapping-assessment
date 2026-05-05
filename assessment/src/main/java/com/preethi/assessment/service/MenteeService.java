@@ -1,70 +1,45 @@
 package com.preethi.assessment.service;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.preethi.assessment.entity.Mentee;
 import com.preethi.assessment.repository.MenteeRepository;
 
 @Service
 public class MenteeService {
 
-
     @Autowired
-    private MenteeRepository menteeRepo;
+    private MenteeRepository menteeRepository;
 
-    public MenteeService(MenteeRepository menteeRepository) {
-        this.menteeRepo = menteeRepository;
+    public Mentee saveMentee(Mentee mentee) {
+        return menteeRepository.save(mentee);
     }
 
-    public MenteeRepository getMenteeRepository() {
-        return menteeRepo;
+    public List<Mentee> findAllMentees() {
+        return menteeRepository.findAll();
     }
 
-    public Mentee saveMentee(Object mentee) {
-        return menteeRepo.save(mentee);
+    public Mentee findMenteeById(Long id) {
+        return menteeRepository.findById(id).orElse(null);
     }
-
-    public List<Mentee> getAllMentee(){
-        return menteeRepo.findAll();
-    }
-
-    public String findMenteeById(Long id) {
-        return menteeRepo.findById(id)
-                .map(mentee -> mentee.getName())
-                .orElse("Mentee not found");
-    }
-
 
     public Mentee updateMentee(Long id, Mentee menteeDetails) {
-        return menteeRepo.findById(id)
-                .map(mentee -> {
-                    mentee.setName(menteeDetails.getName());
-                    mentee.setGoals(menteeDetails.getGoals());
-                    mentee.setSkill_gaps(menteeDetails.getSkill_gaps());
-                    return menteeRepo.save(mentee);
-                })
-                .orElse(null);
+        Mentee mentee = menteeRepository.findById(id).orElse(null);
+        if (mentee != null) {
+            mentee.setName(menteeDetails.getName());
+            mentee.setGoals(menteeDetails.getGoals());
+            mentee.setSkill_gaps(menteeDetails.getSkill_gaps());
+            return menteeRepository.save(mentee);
+        }
+        return null;
     }
 
     public void deleteMentee(Long id) {
-        menteeRepo.deleteById(id);
+        menteeRepository.deleteById(id);
     }
 
-    public Object findMenteeObjectivesById(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findMenteeObjectivesById'");
+    public List<Mentee> searchByName(String name) {
+        return menteeRepository.findByNameContainingIgnoreCase(name);
     }
-
-
-
-
-
-
-    
-
-    
-    
 }

@@ -1,64 +1,45 @@
 package com.preethi.assessment.controller;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
+import com.preethi.assessment.entity.Mentee;
 import com.preethi.assessment.service.MenteeService;
 
 @RestController
 @RequestMapping("/mentees")
 public class MenteeController {
-    
 
     @Autowired
     private MenteeService menteeService;
 
-    public MenteeController(MenteeService menteeService) {
-        this.menteeService = menteeService;
-    }
-
-    public MenteeService getMenteeService() {
-        return menteeService;
-    }
-
-    public void setMenteeService(MenteeService menteeService) {
-        this.menteeService = menteeService;
-    }
-
-    @GetMapping("/{id}")
-    public Object getMenteeById(@PathVariable Long id) {
-        return menteeService.findMenteeById(id);
-    }   
-
-    @GetMapping("/{id}/goals")
-    public Object getMenteeObjectivesById(@PathVariable Long id) {
-        return menteeService.findMenteeObjectivesById(id);   
-     }
-
-    @PostMapping("/")
-    public Object createMentee(@RequestBody Object mentee) {                
+    @PostMapping
+    public Mentee createMentee(@RequestBody Mentee mentee) {
         return menteeService.saveMentee(mentee);
     }
 
-     @GetMapping("/") 
-     public Object getAllMentees() {
-         return menteeService.getAllMentee();
-     }  
-     
-     
+    @GetMapping
+    public List<Mentee> getAllMentees() {
+        return menteeService.findAllMentees();
+    }
 
-    
+    @GetMapping("/{id}")
+    public Mentee getMenteeById(@PathVariable Long id) {
+        return menteeService.findMenteeById(id);
+    }
 
-     
+    @PutMapping("/{id}")
+    public Mentee updateMentee(@PathVariable Long id, @RequestBody Mentee menteeDetails) {
+        return menteeService.updateMentee(id, menteeDetails);
+    }
 
+    @DeleteMapping("/{id}")
+    public void deleteMentee(@PathVariable Long id) {
+        menteeService.deleteMentee(id);
+    }
 
-     
-
-
-
+    @GetMapping("/search")
+    public List<Mentee> searchMentees(@RequestParam String name) {
+        return menteeService.searchByName(name);
+    }
 }

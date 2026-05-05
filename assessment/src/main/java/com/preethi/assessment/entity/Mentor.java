@@ -1,10 +1,7 @@
 package com.preethi.assessment.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import java.util.*;
+import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
 public class Mentor {
@@ -14,41 +11,42 @@ public class Mentor {
     private Long mentor_id;
 
     private String name;
+
+    @ElementCollection
     private List<String> expertise;
-    private enum availability {
-        AVAILABLE,
-        NOT_AVAILABLE
-    }
+
+    private String availability;
+
     public Long getMentor_id() {
-        return mentor_id;
-    }
-    public void setMentor_id(Long mentor_id) {
+         return mentor_id; 
+        }
+    public void setMentor_id(Long mentor_id) { 
         this.mentor_id = mentor_id;
-    }
-    public String getName() {
+     }
+
+    public String getName() { 
         return name;
+     }
+    public void setName(String name) { 
+        this.name = name; 
     }
-    public void setName(String name) {
-        this.name = name;
+
+    public List<String> getExpertise() { 
+        return expertise; 
     }
-    public List<String> getExpertise() {
-        return expertise;
+    public void setExpertise(List<String> expertise) { 
+        this.expertise = expertise; 
     }
-    public void setExpertise(List<String> expertise) {
-        this.expertise = expertise;
-    }
-    public Mentor() {
-    }
+
+    public String getAvailability() {
+         return availability; 
+        }
+    public void setAvailability(String availability) { this.availability = availability; }
+
+    public Mentor() {}
+
     @Override
     public String toString() {
-        return "Mentor [mentor_id=" + mentor_id + ", name=" + name + ", expertise=" + expertise + "]";
+        return "Mentor [mentor_id=" + mentor_id + ", name=" + name + ", expertise=" + expertise + ", availability=" + availability + "]";
     }
-    public Object getAvailability() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAvailability'");
-    }
-
-
-    
-
 }
